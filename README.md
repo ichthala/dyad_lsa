@@ -1,11 +1,11 @@
 # Dyad LSA Fun!
 
-This repository contains a simple R script for calculating cosine similarities on data sets of a specified format. Here's how to use it:
+This repository contains a simple R script for calculating cosine similarities on data sets of an expected format. Here's how to use it:
 
 - Install the package [LSAfun](https://cran.r-project.org/web/packages/LSAfun/LSAfun.pdf)
 - Download the TASA semantic space from [this page](http://www.lingexp.uni-tuebingen.de/z2/LSAspaces/)
 - Open `dyad_lsa.r` in an R application
-- Navigate to a working directory that contains _only_ well-formatted CSV files
+- Navigate to a working directory that contains _only_ CSV files in the expected format
 - Change the `load` argument at the top of the script to wherever you saved the TASA space
 - Run it!
 
