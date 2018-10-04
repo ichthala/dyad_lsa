@@ -26,7 +26,7 @@ for (i in 1:total_dyads_count) {
   userchats = splitchat[!(names(splitchat) %in% c("SERVER"))]
   
   if (length(names(userchats)) < 2) {
-    print(paste(filename, "had fewer than 2 users. Skipping dyad."))
+    warning(paste(filename, "had fewer than 2 users. Skipping dyad."))
     next
   }
 
@@ -38,10 +38,10 @@ for (i in 1:total_dyads_count) {
   user2text <- paste(userchats[[id2]]$text, collapse = " ")
   
   if (user1text == "") {
-    print(paste("User", id1, "of", filename, "had no text. Skipping dyad."))
+    warning(paste("User", id1, "of", filename, "had no text. Skipping dyad."))
   }
   else if (user2text == "") {
-    print(paste("User", id2, "of", filename, "had no text. Skipping dyad."))
+    warning(paste("User", id2, "of", filename, "had no text. Skipping dyad."))
   }
   else {
     # Calculate text similarity
