@@ -9,8 +9,8 @@ load("../../dyad_lsa/TASA.rda")
 # must be dyad files in the expected format
 all_dyad_filenames <- list.files()
 total_dyads_count <- length(all_dyad_filenames)
-dyad_ids <- c(total_dyads_count)
-dyad_cosine_sims <- c(total_dyads_count)
+dyad_ids <- vector(mode = "character", length = total_dyads_count)
+dyad_cosine_sims <- vector(mode = "numeric", length = total_dyads_count)
 
 for (i in 1:total_dyads_count) {
   # Read in CSV and split it into each user's data
@@ -19,6 +19,9 @@ for (i in 1:total_dyads_count) {
   chat$ID <- as.factor(chat$ID)
   splitchat <- split(chat, chat$ID)
   
+  # Add this dyad's ID to the results vector
+  dyad_ids[i] <- chat$dyad[1]
+
   # Skip if the dyad had fewer than 2 (human) users
   userchats = splitchat[!(names(splitchat) %in% c("SERVER"))]
   
@@ -31,8 +34,8 @@ for (i in 1:total_dyads_count) {
   id1 = names(userchats)[1]
   id2 = names(userchats)[2]
 
-  user1text <- paste(userchats[[id1]]$text, collapse = ' ')
-  user2text <- paste(userchats[[id2]]$text, collapse = ' ')
+  user1text <- paste(userchats[[id1]]$text, collapse = " ")
+  user2text <- paste(userchats[[id2]]$text, collapse = " ")
   
   if (user1text == "") {
     print(paste("User", id1, "of", filename, "had no text. Skipping dyad."))
@@ -44,11 +47,16 @@ for (i in 1:total_dyads_count) {
     # Calculate text similarity
     cosine_sim = costring(user1text, user2text, TASA, TRUE)
     
-    # Add values to the results vectors
-    print(cosine_sim)
+    # Add cosine sim to the results vector
+    dyad_cosine_sims[i] <- cosine_sim
   }
 }
 
-# Write results table to file
+# Write results to file
+dyads_and_cosine_sims <- data.frame("dyad" = dyad_ids,
+                                   "cosine_sim" = dyad_cosine_sims,
+                                   stringsAsFactors = FALSE)
 
-# write.table(x, "dyad_cosine_similarities.csv", ",")
+results_filename <- paste("dyad_cosine_similarities_", as.integer(Sys.time()), ".csv", sep = "")
+
+write.csv(dyads_and_cosine_sims, file = results_filename, row.names = FALSE)
