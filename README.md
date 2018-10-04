@@ -1,3 +1,5 @@
+# Dyad LSA Fun!
+
 This repository contains a simple R script for calculating cosine similarities on data sets of a specified format. Here's how to use it:
 
 - Install the package [LSAfun](https://cran.r-project.org/web/packages/LSAfun/LSAfun.pdf)
