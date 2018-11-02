@@ -14,3 +14,5 @@ Results will be outputted to a CSV in the working directory with 2 columns:
 - `cosine_sim`: the cosine similarity for the dyad
 
 If the dyad was missing a user or one of the users had no associated text, then that dyad's ID will still appear in the output file, but with a cosine_sim value of `NA`.
+
+

@@ -2,7 +2,8 @@ library(LSAfun)
 
 # NOTE: You will need to change this filepath to wherever 
 # your TASA space is
-load("../../dyad_lsa/TASA.rda")
+load("/Users/Alice/Desktop/Code/r_scripts/dyad_lsa/TASA.rda")
+setwd("/Users/Alice/Desktop/Code/r_scripts/dyad_data/dyads/")
 
 # Set up initial variables
 # NOTE: All files in the current working directory 
@@ -22,9 +23,9 @@ for (i in 1:total_dyads_count) {
   # Add this dyad's ID to the results vector
   dyad_ids[i] <- chat$dyad[1]
 
-  # Skip if the dyad had fewer than 2 (human) users
   userchats = splitchat[!(names(splitchat) %in% c("SERVER"))]
   
+  # Skip if the dyad had fewer than 2 (human) users
   if (length(names(userchats)) < 2) {
     warning(paste(filename, "had fewer than 2 users. Skipping dyad."))
     next
@@ -59,4 +60,5 @@ dyads_and_cosine_sims <- data.frame("dyad" = dyad_ids,
 
 results_filename <- paste("dyad_cosine_similarities_", as.integer(Sys.time()), ".csv", sep = "")
 
+setwd("~/Desktop/")
 write.csv(dyads_and_cosine_sims, file = results_filename, row.names = FALSE)
